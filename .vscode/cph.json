@@ -1,0 +1,8 @@
+{
+    "default": {
+        "runCommand": "cph run --no-sandbox",
+        "submitCommand": "cph submit --no-sandbox",
+        "compiler": "g++",
+        "compilerFlags": "-std=c++20 -O2 -Wall"
+    }
+}

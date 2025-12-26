@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -152,32 +151,24 @@ void _print(unordered_map<T, V,custom_hash> v)
 }
 
 void solve(){
-    long long n;
-    cin>>n;
-    vector<long long> s1;
-    vector<long long> s2;
-    long long target = n*(n+1)/4;
-    if((n*(n+1)/2)%2==0){
-        while(n>=1){
-            if(n<=target){
-                s1.push_back(n);
-                target-=n;
-            }else{
-                s2.push_back(n);
-            }
-            n--;
-        }
+
+    ll a,b;
+    cin>>a>>b;
+    // if((a==0 and b==0) || (a==1 and b==2) || (a==2 and b==1)){
+    //     cout<<"YES"<<endl;
+    //     return;
+    // }
+    // let say i perform x (1,2) operations and y(2,1) operation to go from (0,0) to (a,b) 
+    // then (a,b) = (x+2y,2x+y)
+    // (a+b)/3 = x+y
+    // y + (a+b)/3 = a
+    // x + (a+b)/3 = b
+    // x = b-(a+b)/3
+    // y = a-(a+b)/3
+    // x = (2b-a)/3
+    // y = (2a-b)/3 
+    if((2*b-a)%3==0 and (2*a-b)%3==0 and (2*a-b)>=0 and (2*b-a)>=0){
         cout<<"YES"<<endl;
-        cout<<s1.size()<<endl;
-        for(auto x :s1){
-            cout<<x<<" ";
-        }
-        cout<<endl;        
-        cout<<s2.size()<<endl;
-        for(auto x :s2){
-            cout<<x<<" ";
-        }
-        cout<<endl;
     }else{
         cout<<"NO"<<endl;
     }
@@ -186,8 +177,7 @@ int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t= 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";

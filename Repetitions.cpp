@@ -152,42 +152,24 @@ void _print(unordered_map<T, V,custom_hash> v)
 }
 
 void solve(){
-    long long n;
-    cin>>n;
-    vector<long long> s1;
-    vector<long long> s2;
-    long long target = n*(n+1)/4;
-    if((n*(n+1)/2)%2==0){
-        while(n>=1){
-            if(n<=target){
-                s1.push_back(n);
-                target-=n;
-            }else{
-                s2.push_back(n);
-            }
-            n--;
-        }
-        cout<<"YES"<<endl;
-        cout<<s1.size()<<endl;
-        for(auto x :s1){
-            cout<<x<<" ";
-        }
-        cout<<endl;        
-        cout<<s2.size()<<endl;
-        for(auto x :s2){
-            cout<<x<<" ";
-        }
-        cout<<endl;
-    }else{
-        cout<<"NO"<<endl;
+    int res = 1;
+    string dna;
+    cin>>dna;
+    int n = dna.size();
+    int count = 1;
+    for(int i = 1 ; i<=n ; i++){
+        if(dna[i]!=dna[i-1]){count = 0;}
+        count++;
+        res = max(res,count);
     }
+    cout<<res<<endl;
 }
 int main()
 {
     fastio();
     ll t;
     // cin >> t;
-    t= 1;
+    t=1;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";

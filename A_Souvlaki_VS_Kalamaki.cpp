@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <chrono>
 
 using namespace std;
 
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,47 +150,32 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void solve(){
-    long long n;
+void pain()
+{
+    int n;
     cin>>n;
-    vector<long long> s1;
-    vector<long long> s2;
-    long long target = n*(n+1)/4;
-    if((n*(n+1)/2)%2==0){
-        while(n>=1){
-            if(n<=target){
-                s1.push_back(n);
-                target-=n;
-            }else{
-                s2.push_back(n);
-            }
-            n--;
-        }
-        cout<<"YES"<<endl;
-        cout<<s1.size()<<endl;
-        for(auto x :s1){
-            cout<<x<<" ";
-        }
-        cout<<endl;        
-        cout<<s2.size()<<endl;
-        for(auto x :s2){
-            cout<<x<<" ";
-        }
-        cout<<endl;
-    }else{
-        cout<<"NO"<<endl;
+    vector<int> v(n);
+    for(int i = 0 ; i< n ; i++){
+        cin>>v[i];
     }
+    sort(v.begin(), v.end());
+    for(int i = 2 ; i<=n-1 ; i+=2){
+        if(i<n and v[i-1]!=v[i]){
+            cout<<"NO"<<endl;
+            return;
+        }
+    }
+    cout<<"YES"<<endl;
 }
 int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t= 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";
-        solve();
+        pain();
     }
     return 0;
 }

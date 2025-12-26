@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -152,42 +151,30 @@ void _print(unordered_map<T, V,custom_hash> v)
 }
 
 void solve(){
-    long long n;
-    cin>>n;
-    vector<long long> s1;
-    vector<long long> s2;
-    long long target = n*(n+1)/4;
-    if((n*(n+1)/2)%2==0){
-        while(n>=1){
-            if(n<=target){
-                s1.push_back(n);
-                target-=n;
-            }else{
-                s2.push_back(n);
+    int n ;cin>>n;
+    string s ;cin>>s;
+    s=s+'#';
+    int count= 0;
+    int ans = 0;
+    for(int i = 0 ; i<s.size() ; i++){
+        if(s[i]=='.'){
+            count++;
+        }else{
+            if(count>=3){
+                cout<<2<<endl;
+                return;
             }
-            n--;
+            ans += count;
+            count = 0;
         }
-        cout<<"YES"<<endl;
-        cout<<s1.size()<<endl;
-        for(auto x :s1){
-            cout<<x<<" ";
-        }
-        cout<<endl;        
-        cout<<s2.size()<<endl;
-        for(auto x :s2){
-            cout<<x<<" ";
-        }
-        cout<<endl;
-    }else{
-        cout<<"NO"<<endl;
     }
+    cout<<ans<<endl;
 }
 int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t= 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";

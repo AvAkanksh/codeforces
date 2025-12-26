@@ -152,42 +152,46 @@ void _print(unordered_map<T, V,custom_hash> v)
 }
 
 void solve(){
-    long long n;
-    cin>>n;
-    vector<long long> s1;
-    vector<long long> s2;
-    long long target = n*(n+1)/4;
-    if((n*(n+1)/2)%2==0){
-        while(n>=1){
-            if(n<=target){
-                s1.push_back(n);
-                target-=n;
-            }else{
-                s2.push_back(n);
-            }
-            n--;
+    int n; cin>>n;
+    vector<int> v(n) ; for(auto &x : v){cin>>x;}
+    string x ; cin>>x;
+    int min_idx;
+    int max_idx;
+    for(int i = 0 ; i<n ;i++){
+        if(v[i]==1){
+            min_idx = i;
         }
-        cout<<"YES"<<endl;
-        cout<<s1.size()<<endl;
-        for(auto x :s1){
-            cout<<x<<" ";
+        if(v[i]==n){
+            max_idx = i;
         }
-        cout<<endl;        
-        cout<<s2.size()<<endl;
-        for(auto x :s2){
-            cout<<x<<" ";
+    }
+    bool x_has_one = false;
+    for(int i = 0 ;i<n;i++){
+        if(x[i]=='1'){
+            x_has_one = true;
         }
-        cout<<endl;
+    }
+    if(!x_has_one){
+        cout<<0<<endl;
+        return;
+    }
+
+    if(x[0]=='0' and x[n-1]=='0' and x[min_idx]=='0' and x[max_idx]=='0'){
+        cout<<5<<endl;
+        cout<<1<<" "<<min_idx+1<<endl;
+        cout<<1<<" "<<max_idx+1<<endl;
+        cout<<min_idx+1<<" "<<n<<endl;
+        cout<<max_idx+1<<" "<<n<<endl;
+        cout<<min(min_idx,max_idx)+1<<" "<<max(min_idx,max_idx)+1<<endl;
     }else{
-        cout<<"NO"<<endl;
+        cout<<-1<<endl;
     }
 }
 int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t= 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";
