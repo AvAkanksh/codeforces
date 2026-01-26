@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,35 +150,46 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void helper(string &s, int idx, set<string> & ss){
-    if(idx==s.size()-1){
-        ss.insert(s);
-        return;
-    }
-    for(int i = idx ; i<s.size() ; i++){
-        swap(s[idx],s[i]);
-        helper(s,idx+1,ss);
-        swap(s[idx],s[i]);
-    }
-}
-
 void solve(){
-    string s ;
-    cin>>s;
-    sort(all(s));
-    set<string> ss;
-    helper(s,0,ss);
-    cout<<ss.size()<<endl;
-    for(auto x : ss){
-        cout<<x<<endl;
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    int maxIdx = 0;
+    int secondMax = -1;
+    for(int i = 0 ; i<n  ; i++){
+        cin>>arr[i];
+        if(arr[maxIdx]<=arr[i]){
+            maxIdx=i;
+        }
     }
+    vector<int> sarr(all(arr));
+    sort(sarr.begin(),sarr.end());
+    reverse(all(sarr));
+    int idx = 0;
+    while(idx<n and arr[idx]==sarr[idx] ){
+        idx++;
+    }
+    // debug(idx);
+    if(idx!=n){    int highestIdx = idx;
+    int newhighest = idx;
+    for(int i = idx; i<n ;i++){
+        if(arr[newhighest]<=arr[i]){
+            newhighest = i;
+        }
+    }
+    // debug(newhighest)
+    reverse(arr.begin()+highestIdx, arr.begin()+newhighest+1);
+}    for(auto x: arr){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+
 }
 int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t = 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";

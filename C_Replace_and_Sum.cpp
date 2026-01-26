@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,35 +150,49 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void helper(string &s, int idx, set<string> & ss){
-    if(idx==s.size()-1){
-        ss.insert(s);
-        return;
-    }
-    for(int i = idx ; i<s.size() ; i++){
-        swap(s[idx],s[i]);
-        helper(s,idx+1,ss);
-        swap(s[idx],s[i]);
-    }
-}
-
 void solve(){
-    string s ;
-    cin>>s;
-    sort(all(s));
-    set<string> ss;
-    helper(s,0,ss);
-    cout<<ss.size()<<endl;
-    for(auto x : ss){
-        cout<<x<<endl;
+    int n,q;
+    cin>>n>>q;
+    vector<int> a(n);
+    vector<int> b(n);
+    for(int i = 0 ; i<n ; i++){
+        cin>>a[i];
     }
+    for(int i = 0 ; i<n ; i++){
+        cin>>b[i];
+    }
+    vector<int> com(n);
+    for(int i = 0 ; i< n ;i++){
+        com[i] = max(a[i],b[i]);
+    }
+    for(int i = n-2 ; i>=0 ; i--){
+        com[i] = max(com[i+1],com[i]);
+    }
+    vector<int> prefixSum(n);
+    prefixSum[0] = com[0];
+    for(int i = 1 ; i< n ; i++){
+        prefixSum[i] = prefixSum[i-1]+com[i];
+    }
+
+    for(int i = 0 ; i<q ; i++){
+        int l;
+        int r;
+        cin>>l>>r;
+        int ans;
+        if(l-2>=0){
+            ans = prefixSum[r-1] - prefixSum[l-2];
+        }else{
+            ans = prefixSum[r-1];
+        }
+        cout<<ans<<" ";
+    }
+    cout<<endl;
 }
 int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t = 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";

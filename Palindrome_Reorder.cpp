@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,28 +150,47 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void helper(string &s, int idx, set<string> & ss){
-    if(idx==s.size()-1){
-        ss.insert(s);
+void solve(){
+    string s;
+    cin>>s;
+    vector<ll> freq(26,0);
+    for(auto x :s){
+        freq[x-'A']++;
+    }
+    bool odd = false;
+    ll count = 0;
+    for(auto x : freq){
+        if(x%2==1){
+            if(odd){
+                cout<<"NO SOLUTION"<<endl;
+                return;
+            }else{
+                odd=true;
+            }
+        }
+        if(x!=0){
+            count++;
+        }
+    }
+    if(count==1){
+        cout<<s<<endl;
         return;
     }
-    for(int i = idx ; i<s.size() ; i++){
-        swap(s[idx],s[i]);
-        helper(s,idx+1,ss);
-        swap(s[idx],s[i]);
+    string s1 = "";
+    string s2;
+    string oddString = "";
+    for(int i = 0 ; i<26 ; i++){
+        char c = 'A' + i;
+        if(freq[i]%2==0){
+            s1 += string(freq[i]/2,c);
+        }else{
+            oddString += string(freq[i],c);
+        }
     }
-}
+    s2 = s1;
+    reverse(s2.begin(),s2.end());
+    cout<<s1<<oddString<<s2<<endl;
 
-void solve(){
-    string s ;
-    cin>>s;
-    sort(all(s));
-    set<string> ss;
-    helper(s,0,ss);
-    cout<<ss.size()<<endl;
-    for(auto x : ss){
-        cout<<x<<endl;
-    }
 }
 int main()
 {

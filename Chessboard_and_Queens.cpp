@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,35 +150,52 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void helper(string &s, int idx, set<string> & ss){
-    if(idx==s.size()-1){
-        ss.insert(s);
+bool checkIsSafe(vector<string>&cb, int row, int col){
+    if(cb[row][col]=='*') return false;
+    for(int i =0 ; i<col ; i++){
+        if(cb[row][i]=='q')return false;
+    }
+
+    for(int i = row-1 , j = col-1 ; i>=0 and j>=0 ; i-- , j--){
+        if(cb[i][j]=='q')return false;
+    }
+
+    for(int i = row+1 , j = col-1 ; i<8 and j>=0 ; i++ , j--){
+        if(cb[i][j]=='q')return false;
+    }
+    return true;
+}
+
+void countConfigurations(vector<string> &cb, int& ans, int col){
+    if(col==8){
+        ans++;
         return;
     }
-    for(int i = idx ; i<s.size() ; i++){
-        swap(s[idx],s[i]);
-        helper(s,idx+1,ss);
-        swap(s[idx],s[i]);
+    for(int row = 0 ; row<8 ; row++){
+        if(checkIsSafe(cb,row,col)){
+            cb[row][col] = 'q';
+            countConfigurations(cb,ans,col+1);
+            cb[row][col] = '.';
+        }
     }
 }
 
 void solve(){
-    string s ;
-    cin>>s;
-    sort(all(s));
-    set<string> ss;
-    helper(s,0,ss);
-    cout<<ss.size()<<endl;
-    for(auto x : ss){
-        cout<<x<<endl;
+    int ans = 0;
+    vector<string> cb(8);
+    for(int i = 0; i<8 ; i++){
+        cin>>cb[i];
     }
+    int col = 0;
+    countConfigurations(cb,ans,col);
+    cout<<ans<<endl;
 }
 int main()
 {
     fastio();
     ll t;
     // cin >> t;
-    t = 1;
+    t =1;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";

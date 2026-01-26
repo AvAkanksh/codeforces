@@ -1,6 +1,6 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
+#include<numeric>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +107,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +129,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +140,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,35 +151,59 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void helper(string &s, int idx, set<string> & ss){
-    if(idx==s.size()-1){
-        ss.insert(s);
-        return;
+void solve(){
+    int n, m,k;
+    cin>>n>>m>>k;
+    vector<int> robots(n);
+    for(int i = 0 ; i<n; i++){
+        cin>>robots[i];
     }
-    for(int i = idx ; i<s.size() ; i++){
-        swap(s[idx],s[i]);
-        helper(s,idx+1,ss);
-        swap(s[idx],s[i]);
+    unordered_set<int> spikes;
+    for(int i = 0 ; i<m ; i++){
+        int s;
+        cin>>s;
+        spikes.insert(s);
     }
+    string instructions;
+    cin>>instructions;
+    int curr_robots_alive = n;
+    vector<int> indexes(n);
+    iota(indexes.begin(), indexes.end(),0);
+    unordered_set<int> alive_robots(indexes.begin(), indexes.end());
+    for(int i = 0 ;i<n ;i++){
+        if(spikes.count(robots[i])){
+            curr_robots_alive--;
+            alive_robots.erase(i);
+        }
+    }
+
+    vector<int> ans;
+    for(int i= 0 ; i<instructions.size();i++){
+        int dir = instructions[i]=='L'?-1:1;
+        vector<int> to_kill;
+        for(auto x : alive_robots){
+            if(spikes.count(robots[x]+dir)){
+                to_kill.push_back(x);
+            }else{
+                robots[x] += dir;
+            }
+        }
+        for(auto y : to_kill){
+            alive_robots.erase(y);
+        }
+        ans.push_back(alive_robots.size());
+    }
+    for(auto x : ans){
+        cout<<x<<" ";
+    }
+    cout<<endl;
 }
 
-void solve(){
-    string s ;
-    cin>>s;
-    sort(all(s));
-    set<string> ss;
-    helper(s,0,ss);
-    cout<<ss.size()<<endl;
-    for(auto x : ss){
-        cout<<x<<endl;
-    }
-}
 int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t = 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";

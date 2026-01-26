@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,27 +150,26 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void helper(string &s, int idx, set<string> & ss){
-    if(idx==s.size()-1){
-        ss.insert(s);
-        return;
-    }
-    for(int i = idx ; i<s.size() ; i++){
-        swap(s[idx],s[i]);
-        helper(s,idx+1,ss);
-        swap(s[idx],s[i]);
-    }
-}
-
 void solve(){
-    string s ;
-    cin>>s;
-    sort(all(s));
-    set<string> ss;
-    helper(s,0,ss);
-    cout<<ss.size()<<endl;
-    for(auto x : ss){
-        cout<<x<<endl;
+    vector<vector<int>> grid(3, vector<int> (3,1));
+    vector<int> dir = {-1,0,1,0};
+    for(int i = 0 ; i<3 ; i++){
+        for(int j = 0 ; j<3 ; j++){
+            int x ;
+            cin>>x;
+            if(x%2==1){
+            grid[i][j]+=1;
+            for(int k =0 ; k<4 ; k++)
+                if(i+dir[k]>=0 and i+dir[k]<=2 and j+dir[(k+1)%4]>=0 and j+dir[(k+1)%4]<=2){
+                    grid[i+dir[k]][j+dir[(k+1)%4]]+=1;
+                }
+            }
+        }
+    }
+    for(auto x : grid){
+        for(auto y : x){
+            cout<<y%2;
+        }cout<<endl;
     }
 }
 int main()

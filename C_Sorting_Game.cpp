@@ -1,6 +1,5 @@
-#include <bits/stdc++.h>
-#include <chrono>
-
+#include<bits/stdc++.h>
+#include<chrono>
 using namespace std;
 
 typedef long long ll;
@@ -107,7 +106,7 @@ void _print(set<T> v)
     cerr << "]";
 }
 template <class T>
-void _print(unordered_set<T,custom_hash> v)
+void _print(unordered_set<T, custom_hash> v)
 {
     cerr << "[ ";
     for (T i : v)
@@ -129,7 +128,7 @@ void _print(multiset<T> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(map<T, V> v)
+void _print(map<T, V,custom_hash> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -140,7 +139,7 @@ void _print(map<T, V> v)
     cerr << "]";
 }
 template <class T, class V>
-void _print(unordered_map<T, V,custom_hash> v)
+void _print(unordered_map<T, V> v)
 {
     cerr << "[ ";
     for (auto i : v)
@@ -151,35 +150,44 @@ void _print(unordered_map<T, V,custom_hash> v)
     cerr << "]";
 }
 
-void helper(string &s, int idx, set<string> & ss){
-    if(idx==s.size()-1){
-        ss.insert(s);
-        return;
-    }
-    for(int i = idx ; i<s.size() ; i++){
-        swap(s[idx],s[i]);
-        helper(s,idx+1,ss);
-        swap(s[idx],s[i]);
-    }
-}
-
 void solve(){
-    string s ;
+    int n ;
+    cin>>n;
+    string s;
     cin>>s;
-    sort(all(s));
-    set<string> ss;
-    helper(s,0,ss);
-    cout<<ss.size()<<endl;
-    for(auto x : ss){
-        cout<<x<<endl;
+    bool isSorted = true;
+    for(int i =0 ; i< n-1 ; i++){
+        if(s[i]>s[i+1]){
+            isSorted = false;
+            break;
+        }
     }
+    if(isSorted){cout<<"Bob"<<endl;return;}
+    int zeros = 0;
+    for(auto c : s){
+        if(c=='0'){
+            zeros++;
+        }
+    }
+    int ones = n-zeros;
+
+    vector<int> ansPath;
+    for(int i = 0 ; i<n ; i++){
+        char t = (i<zeros)?'0':'1';
+        if(s[i]!=t){ansPath.push_back(i+1);}
+    }
+    cout<<"Alice"<<endl;
+    cout<<ansPath.size()<<endl;
+    for(auto x: ansPath){
+        cout<<x<<" ";
+    }
+    cout<<endl;
 }
 int main()
 {
     fastio();
     ll t;
-    // cin >> t;
-    t = 1;
+    cin >> t;
     for (int zx = 1; zx <= t; zx++)
     {
         // cout << "Case #" << zx << ": ";
