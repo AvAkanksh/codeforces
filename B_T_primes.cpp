@@ -153,21 +153,20 @@ void no(bool t = 1) { yes(!t); }
 
 // --- Solve ---
 void solve() {
-    INT(N);
-    VEC(ll, A, N);
-    VEC(int, B, N);
-    sort(all(A)); reverse(all(A));
-    ll curr = 0;
-    ll ans = 0;
-    FOR(i,N){
-        curr+=B[i];
-        if(curr>N){break;}
-        chmax(ans,(i+1)*A[curr-1]);
+    LL(N);
+    int count = 0;
+    bool flag = false;
+    for(int i = 2 ; i*i<=N ; i++){
+        if(N%i==0 and i*i!=N){
+            count++;
+            break;
+        }if(i*i==N){
+            flag = true;
+            count++;
+        }
     }
-    print(ans);
+    (count==1 and flag)?YES() : NO();
 }
-
-
 
 signed main() {
     INT(T);

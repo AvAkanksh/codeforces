@@ -154,20 +154,15 @@ void no(bool t = 1) { yes(!t); }
 // --- Solve ---
 void solve() {
     INT(N);
-    VEC(ll, A, N);
-    VEC(int, B, N);
-    sort(all(A)); reverse(all(A));
-    ll curr = 0;
-    ll ans = 0;
-    FOR(i,N){
-        curr+=B[i];
-        if(curr>N){break;}
-        chmax(ans,(i+1)*A[curr-1]);
+    STR(seats);
+    if(N<=3){
+        print(1);
+        return;
     }
-    print(ans);
+    vi a;
+    FOR()
+    if()
 }
-
-
 
 signed main() {
     INT(T);

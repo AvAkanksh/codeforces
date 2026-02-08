@@ -154,20 +154,17 @@ void no(bool t = 1) { yes(!t); }
 // --- Solve ---
 void solve() {
     INT(N);
-    VEC(ll, A, N);
-    VEC(int, B, N);
-    sort(all(A)); reverse(all(A));
-    ll curr = 0;
-    ll ans = 0;
-    FOR(i,N){
-        curr+=B[i];
-        if(curr>N){break;}
-        chmax(ans,(i+1)*A[curr-1]);
+    VEC(int, A, N);
+    vi ans(N+1);
+    FOR(i, 1, N+1) ans[i] = INFINITY/2;
+    FOR(i,N) ans[A[i]]=1;
+    FOR(i,2,N+1){
+        for(int j = i*2 ; j<=N and j/i <= i ; j+=i){
+            chmin(ans[j],ans[i]+ans[j/i]);
+        }
     }
-    print(ans);
+
 }
-
-
 
 signed main() {
     INT(T);

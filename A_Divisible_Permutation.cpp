@@ -38,7 +38,8 @@ template <> constexpr ll infty<ll> = 2'020'000'000'000'000'000;
 #define FOR1_R(a) for (ll i = (a) - 1; i >= ll(0); --i)
 #define FOR2_R(i, a) for (ll i = (a) - 1; i >= ll(0); --i)
 #define FOR3_R(i, a, b) for (ll i = (b) - 1; i >= ll(a); --i)
-#define FOR_R(...) overload4(__VA_ARGS__, FOR3_R, FOR3_R, FOR2_R, FOR1_R)(__VA_ARGS__)
+#define FOR4_R(i, a, b, c) for (ll i = (b) - 1; i >= ll(a); i -= (c))
+#define FOR_R(...) overload4(__VA_ARGS__, FOR4_R, FOR3_R, FOR3_R, FOR2_R, FOR1_R)(__VA_ARGS__)
 
 #define all(x) (x).begin(), (x).end()
 #define len(x) ll(x.size())
@@ -154,20 +155,19 @@ void no(bool t = 1) { yes(!t); }
 // --- Solve ---
 void solve() {
     INT(N);
-    VEC(ll, A, N);
-    VEC(int, B, N);
-    sort(all(A)); reverse(all(A));
-    ll curr = 0;
-    ll ans = 0;
-    FOR(i,N){
-        curr+=B[i];
-        if(curr>N){break;}
-        chmax(ans,(i+1)*A[curr-1]);
+    vi a(N,-1);
+    int count = 1;
+    FOR_R(i,0,N,2){
+        a[i] = count;
+        count++;
     }
-    print(ans);
+    count = N;
+    FOR_R(i,0,N-1,2){
+        a[i] = count;
+        count--;
+    }
+    print(a);
 }
-
-
 
 signed main() {
     INT(T);
